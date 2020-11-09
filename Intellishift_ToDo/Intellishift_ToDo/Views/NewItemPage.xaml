@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Intellishift_ToDo.Views.NewItemPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="New Item">
+    <ContentPage.Content>
+        <StackLayout Padding="15" Spacing="3">
+            <Label FontSize="Medium" Text="Item Text" />
+            <Entry FontSize="Medium" Text="{Binding Text, Mode=TwoWay}" />
+            <StackLayout Orientation="Horizontal">
+                <Label
+                    FontSize="Medium"
+                    Text="Complete:"
+                    VerticalOptions="Center" />
+                <CheckBox IsChecked="{Binding Completed}" VerticalOptions="Center" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button
+                    Command="{Binding CancelCommand}"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Cancel" />
+                <Button
+                    Command="{Binding SaveCommand}"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Save" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Intellishift_ToDo.Views.ItemsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Intellishift_ToDo.ViewModels"
+    xmlns:model="clr-namespace:Intellishift_ToDo.Models"
+    x:Name="BrowseItemsPage"
+    Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding AddToDoItemCommand}" Text="Add" />
+    </ContentPage.ToolbarItems>
+
+    <!--
+        x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+        https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+    <RefreshView
+        x:Name="RefreshItemsView"
+        x:DataType="local:ItemsViewModel"
+        Command="{Binding LoadToDoItemsCommand}"
+        IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView
+            x:Name="ItemsListView"
+            ItemsSource="{Binding Items}"
+            SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10" x:DataType="model:ToDoItem">
+                        <StackLayout Orientation="Horizontal" >
+                            <CheckBox  IsChecked="{Binding Completed}"  IsEnabled="false" VerticalOptions="Center"/>
+                            <Label
+                                FontSize="16"
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemTextStyle}"
+                                Text="{Binding Text}"
+                                VerticalOptions="Center"/>
+                        </StackLayout>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"
+                                CommandParameter="{Binding .}"
+                                NumberOfTapsRequired="1" />
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Intellishift_ToDo.Views.ToDoListsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Intellishift_ToDo.ViewModels"
+    xmlns:model="clr-namespace:Intellishift_ToDo.Models"
+    x:Name="BrowseToDoListsPage"
+    Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding AddToDoListCommand}" Text="Add" />
+    </ContentPage.ToolbarItems>
+    <!--
+        x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+        https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+    <RefreshView
+        x:DataType="local:ToDoListViewModel"
+        Command="{Binding LoadToDoListCommand}"
+        IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView
+            x:Name="ToDoListCollectionView"
+            ItemsSource="{Binding ToDoLists}"
+            SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10" x:DataType="model:ToDoList">
+                            <Label Text="{Binding Description}"
+                                   LineBreakMode="NoWrap"
+                                   Style="{DynamicResource ListItemTextStyle}"
+                                   FontSize="16" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    NumberOfTapsRequired="1"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ToDoListViewModel}}, Path=ItemTapped}"		
+                                     CommandParameter="{Binding .}">
+                                </TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+
+</ContentPage>
