@@ -49,7 +49,7 @@ namespace Intellishift_ToDo.ViewModels
         private async void OnCancel()
         {
             // This will pop the current page off the navigation stack
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync($"..?ToDoListId={ToDoListId}");
         }
 
         private async void OnSave()
