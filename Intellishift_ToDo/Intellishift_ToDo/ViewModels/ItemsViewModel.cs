@@ -57,6 +57,7 @@ namespace Intellishift_ToDo.ViewModels
                 {
                     Items.Add(item);
                 }
+                
             }
             catch (Exception ex)
             {

@@ -46,6 +46,11 @@ namespace Intellishift_ToDo.ViewModels
                 {
                     ToDoLists.Add(item);
                 }
+
+                if (ToDoLists.Count < 1)
+                {
+                    await Application.Current.MainPage.DisplayAlert("No lists", "You have no to do lists, craete one with the Add button", "OK");
+                }
             }
             catch (Exception ex)
             {
